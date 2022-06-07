@@ -1,0 +1,166 @@
+Actividad,Intangibles,Proporciones
+Agricultura,Marca,0.36
+Agricultura,Procesos,0.3
+Agricultura,Capital Humano,0.19
+Agricultura,Diseños Industriales,0.08
+Agricultura,Cartera de Clientes,0.07
+Cría y Explotación de Animales,Marcas,0.34
+Cría y Explotación de Animales,Permisos y Certificaciones,0.3
+Cría y Explotación de Animales,Empleados Clave,0.18
+Cría y Explotación de Animales,Procesos,0.09
+Cría y Explotación de Animales,Invenciones,0.09
+Aprovechamiento Forestal,Permisos y Certificaciones,0.36
+Aprovechamiento Forestal,Empleados Clave,0.29
+Aprovechamiento Forestal,Procesos,0.19
+Aprovechamiento Forestal,Diseños Industriales,0.09
+Aprovechamiento Forestal,Cartera de Clientes,0.07
+Pesca,Contratos de Exportación,0.38
+Pesca,Nombre Comercial,0.29
+Pesca,Diseños Industriales,0.17
+Pesca,Procesos,0.09
+Pesca,Capital Intelectual,0.07
+Minería,Marca,0.36
+Minería,Permisos,0.29
+Minería,Diseños Industriales,0.18
+Minería,Capital Humano,0.1
+Minería,Procesos,0.07
+Producción y Comercialización de Gas Natural,Marcas,0.35
+Producción y Comercialización de Gas Natural,Diseños Industriales,0.3
+Producción y Comercialización de Gas Natural,Capital Humano,0.18
+Producción y Comercialización de Gas Natural,Certificaciones,0.1
+Producción y Comercialización de Gas Natural,Procesos,0.07
+Construcción,Marca,0.38
+Construcción,Procesos,0.29
+Construcción,Personal Clave,0.18
+Construcción,Procesos,0.08
+Construcción,Aviso Comercial,0.07
+Manufactura y Otras Industrias,Marca,0.33
+Manufactura y Otras Industrias,Secretos Industriales,0.28
+Manufactura y Otras Industrias,Procesos,0.19
+Manufactura y Otras Industrias,Circuitos Integrados,0.1
+Manufactura y Otras Industrias,Cartera de Clientes,0.1
+Comercio al por Mayor,Marca,0.37
+Comercio al por Mayor,Procesos,0.27
+Comercio al por Mayor,Certificaciones,0.19
+Comercio al por Mayor,Cartera de Clientes,0.1
+Comercio al por Mayor,Franquicias,0.07
+Comercio al por Menor,Marca,0.37
+Comercio al por Menor,Personal Clave,0.28
+Comercio al por Menor,Franquicias,0.19
+Comercio al por Menor,Capacitaciones,0.08
+Comercio al por Menor,Aviso Comercial,0.08
+Servicios de Transporte,Marca,0.39
+Servicios de Transporte,Software,0.29
+Servicios de Transporte,Personal Clave,0.17
+Servicios de Transporte,Capacitaciones,0.08
+Servicios de Transporte,Procesos,0.07
+Servicios de Correos,Marca,0.4
+Servicios de Correos,Software,0.27
+Servicios de Correos,Certificaciones,0.19
+Servicios de Correos,Capacitaciones,0.07
+Servicios de Correos,Cartera de Clientes,0.07
+Servicios de Almacenamiento,Marca,0.35
+Servicios de Almacenamiento,Software,0.29
+Servicios de Almacenamiento,Certificaciones,0.18
+Servicios de Almacenamiento,Capacitaciones,0.09
+Servicios de Almacenamiento,Circuitos Integrados,0.09
+Medios Masivos de Información,Marca,0.37
+Medios Masivos de Información,Circuitos Integrados,0.27
+Medios Masivos de Información,Personal Clave,0.19
+Medios Masivos de Información,Cartera de Clientes,0.1
+Medios Masivos de Información,Nombre Comercial,0.07
+Servicios Financieros,Nombre Comercial,0.36
+Servicios Financieros,Software,0.29
+Servicios Financieros,Capital Humano,0.19
+Servicios Financieros,Aprobaciones Regulatorias,0.09
+Servicios Financieros,Procesos,0.07
+Seguros y Fianzas,Marca,0.38
+Seguros y Fianzas,Software,0.27
+Seguros y Fianzas,Capital Intelectual,0.17
+Seguros y Fianzas,Aprobaciones Regulatorias,0.1
+Seguros y Fianzas,Procesos,0.08
+Servicios Inmobiliarios,Marca,0.36
+Servicios Inmobiliarios,Capital Intelectual,0.3
+Servicios Inmobiliarios,Nombre Comercial,0.2
+Servicios Inmobiliarios,Capacitaciones,0.07
+Servicios Inmobiliarios,Procesos,0.07
+Alquiler de Bienes Muebles e Intangibles,Marca,0.35
+Alquiler de Bienes Muebles e Intangibles,Capital Humano,0.3
+Alquiler de Bienes Muebles e Intangibles,Nombre Comercial,0.18
+Alquiler de Bienes Muebles e Intangibles,Capacitaciones,0.09
+Alquiler de Bienes Muebles e Intangibles,Procesos,0.08
+Servicios Profesionales,Capacitaciones,0.37
+Servicios Profesionales,Empleados Clave,0.28
+Servicios Profesionales,Capital Intelectual,0.18
+Servicios Profesionales,Software,0.1
+Servicios Profesionales,Cartera de Clientes,0.07
+Servicios Científicos,Patentes,0.38
+Servicios Científicos,Diseños Industriales,0.27
+Servicios Científicos,Capital Intelectual,0.18
+Servicios Científicos,Secretos Industriales,0.1
+Servicios Científicos,Modelo de Utilidad,0.07
+Servicios Técnicos,Capacitaciones,0.35
+Servicios Técnicos,Empleados Clave,0.28
+Servicios Técnicos,Marca,0.2
+Servicios Técnicos,Diseños Industriales,0.09
+Servicios Técnicos,Procesos,0.08
+Corporativos,Nombre Comercial,0.37
+Corporativos,Software,0.27
+Corporativos,Capital Humano,0.17
+Corporativos,Certificaciones,0.1
+Corporativos,Procesos,0.09
+Servicios de Apoyo a Negocios,Marca,0.37
+Servicios de Apoyo a Negocios,Capital Humano,0.27
+Servicios de Apoyo a Negocios,Cartera de Clientes,0.19
+Servicios de Apoyo a Negocios,Procesos,0.1
+Servicios de Apoyo a Negocios,Aviso Comercial,0.07
+Servicios de Manejo de Residuos,Capital Humano,0.35
+Servicios de Manejo de Residuos,Procesos,0.29
+Servicios de Manejo de Residuos,Marca,0.19
+Servicios de Manejo de Residuos,Cartera de Clientes,0.09
+Servicios de Manejo de Residuos,Capacitaciones,0.08
+Servicios de Mantenimiento,Nombre Comercial,0.37
+Servicios de Mantenimiento,Software,0.29
+Servicios de Mantenimiento,Capital Humano,0.19
+Servicios de Mantenimiento,Certificaciones,0.08
+Servicios de Mantenimiento,Procesos,0.07
+Servicios Educativos,Marca,0.34
+Servicios Educativos,Capital Humano,0.3
+Servicios Educativos,Software,0.18
+Servicios Educativos,Certificaciones,0.1
+Servicios Educativos,Procesos,0.08
+Servicios de Salud,Marca,0.38
+Servicios de Salud,Capital Humano,0.28
+Servicios de Salud,Procesos,0.17
+Servicios de Salud,Certificaciones,0.1
+Servicios de Salud,Software,0.07
+Servicios de Asistencia Social,Capacitaciones,0.4
+Servicios de Asistencia Social,Capital Humano,0.27
+Servicios de Asistencia Social,Procesos,0.18
+Servicios de Asistencia Social,Certificaciones,0.08
+Servicios de Asistencia Social,Software,0.07
+Servicios de Esparcimiento Cultural,Nombre Comercial,0.32
+Servicios de Esparcimiento Cultural,Aviso Comercial,0.3
+Servicios de Esparcimiento Cultural,Software,0.2
+Servicios de Esparcimiento Cultural,Capital Humano,0.1
+Servicios de Esparcimiento Cultural,Procesos,0.08
+Servicios Deportivos,Marca,0.39
+Servicios Deportivos,Empleados Clave,0.27
+Servicios Deportivos,Certificaciones,0.18
+Servicios Deportivos,Secretos Industriales,0.09
+Servicios Deportivos,Capacitaciones,0.07
+Otros Servicios Recreativos,Aviso Comercial,0.37
+Otros Servicios Recreativos,Cartera de Clientes,0.27
+Otros Servicios Recreativos,Empleados Clave,0.19
+Otros Servicios Recreativos,Capacitaciones,0.1
+Otros Servicios Recreativos,Software,0.07
+Servicios de Alojamiento,Marca,0.4
+Servicios de Alojamiento,Software,0.27
+Servicios de Alojamiento,Capital Humano,0.18
+Servicios de Alojamiento,Capacitaciones,0.08
+Servicios de Alojamiento,Procesos,0.07
+Servicios de Preparación de Alimentos y Bebidas,Marca,0.33
+Servicios de Preparación de Alimentos y Bebidas,Recetas,0.3
+Servicios de Preparación de Alimentos y Bebidas,Empleados Clave,0.2
+Servicios de Preparación de Alimentos y Bebidas,Capacitaciones,0.1
+Servicios de Preparación de Alimentos y Bebidas,Procesos,0.07
