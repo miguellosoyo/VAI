@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 import altair as alt
 import streamlit as st
-import pyecharts.options as opts
 from pyecharts.charts import Bar, Pie
 
 # Definir una función para obtener la distribución de pesos para una lista de variables
