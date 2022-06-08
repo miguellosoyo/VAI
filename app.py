@@ -6,9 +6,9 @@ import numpy as np
 import pandas as pd
 import altair as alt
 import streamlit as st
-import pyecharts.options as opts
-from pyecharts.charts import Bar, Pie
-from streamlit_echarts import st_pyecharts
+# import pyecharts.options as opts
+# from pyecharts.charts import Bar, Pie
+# from streamlit_echarts import st_pyecharts
 
 # Definir una función para obtener la distribución de pesos para una lista de variables
 def weighted(elements:list, step:float=10, start:int=7, end:int=11, threshold:float=0.32, seed:bool=True):
