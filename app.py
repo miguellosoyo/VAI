@@ -239,4 +239,4 @@ st.markdown(out_vai.to_html(), unsafe_allow_html=True)
 # st.write(out_vai)
 
 # Insertar una nota al pie de la tabla
-st.caption(f'Resultados estimados con base en información financiera de la actividad económica.')
+st.caption(f'Resultados en millones de pesos, estimados con base en información financiera de la actividad económica.')
