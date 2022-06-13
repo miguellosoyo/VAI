@@ -176,7 +176,6 @@ out_vai.rename(columns={'index':'Costo fiscal Sin VAI'}, inplace=True) # Renombr
 
 # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
 out_vai = out_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
-# out_vai = out_vai.style.set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
 
 # Definir las propiedades de estilo para los encabezados
 th_props = [
@@ -241,6 +240,81 @@ st.subheader(f'''
 # Integrar el DataFrame a la aplicación Web
 st.markdown(out_vai.to_html(), unsafe_allow_html=True)
 # st.write(out_vai)
+
+# Insertar una nota al pie de la tabla
+st.caption(f'Resultados en millones de pesos, estimados con base en información financiera de la actividad económica.')
+
+# Estimar el valor de 6 activos intangibles
+int_val = round(income*int_rate,2)
+vai_df = df_prop.loc[df_prop['Actividad']==activity, ['Intangibles', 'Proporciones']].copy()
+vai_df['Valor Intangibles'] = vai_df['Proporciones'].multiply(int_val).astype(int)
+vai_df = vai_df[['Intangibles', 'Valor Intangibles', 'Proporciones']] # Reordenar columnas
+
+# Calcular las tablas de flujos de efectivo con VAI
+with_vai = pd.DataFrame({'Utilidad antes de Impuestos':[raw_data['EBT'][0]*((1+inf_rate)**i) for i in range(0,7)], 
+                         'Amortización del Activo Intangible':[(int_val*0.15)/1e6 
+                                                               if i!=6 else (int_val*0.1)/1e6 for i in range(0,7)], 
+                         'Utilidad antes de Impuestos Ajustada':[i for i in range(0,7)],
+                         'ISR':[i for i in range(0,7)],
+                         'Utilidad Neta':[i for i in range(0,7)], 'Costo Fiscal':[0 if i==0 else np.nan for i in range(0,7)]
+                         }, index=[f'A{i}' for i in range(0,7)]).T
+with_vai.loc['Utilidad antes de Impuestos Ajustada',:] = with_vai.loc['Utilidad antes de Impuestos', :].sub(with_vai.loc['Amortización del Activo Intangible',:])
+with_vai.loc['ISR',:] = with_vai.loc['Utilidad antes de Impuestos Ajustada', :].multiply(tax_rate)
+with_vai.loc['Utilidad Neta',:] = with_vai.loc['Utilidad antes de Impuestos Ajustada', :].sub(with_vai.loc['ISR', :])
+with_vai = with_vai.round(2)
+with_vai.loc['Costo Fiscal', 'A0'] = with_vai.loc['ISR',:].sum()
+with_vai = with_vai.round(2).reset_index() # Redondear a una cifra decimal y reiniciar índice
+with_vai.rename(columns={'index':'Costo fiscal Con VAI'}, inplace=True) # Renombrar primera columna
+
+# Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
+with_vai = with_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+
+# Definir las propiedades de estilo para los encabezados
+th_props = [
+            ('font-size', '12pt'),
+            ('text-align', 'center'),
+            ('font-weight', 'bold'),
+            ('color', 'white'),
+            ('background-color', '#000086'),
+            ('width', '70%'),
+            ]
+
+# Definir las propiedades de estilo para la información de la tabla
+td_props = [
+            ('font-size', '8pt'),
+            ('width', '110%'),
+            ('text-align', 'center'),
+            ('border', '0.1px solid white'),
+            ]
+
+# Integrar los estilos en una variable de estilos
+styles = [
+          dict(selector='th', props=th_props),
+          dict(selector='td', props=td_props),
+          {'selector':'.line', 'props':'border-bottom: 0.5px solid #000066'},
+          {'selector':'.False', 'props':'color: white'},
+          {'selector':'.Cost', 'props':[('font-weight', 'bold'), ('color', '#000086'), ('background-color', '#ffff99')]},
+          {'selector':'.w', 'props':[('background-color','white'), ('color','black')]},
+          ]
+
+# Integrar líneas si el índice corresponde a una posición de la tabla
+cell_border = pd.DataFrame([['line']*len(x) if i==1 or i==2 or i==3 or i==4 else ['']*len(x) for i, x in with_vai.data.iterrows()], columns=with_vai.data.columns)
+cell_fiscal_cost = pd.DataFrame([x.notnull().astype(str).replace('True', 'w').tolist() if i==0 else (x.notnull().astype(str).replace('True', 'Cost').tolist() if i==5 
+                                                                                                     else ['False']*len(x)) for i, x in with_vai.data.iterrows()], columns=with_vai.data.columns)
+
+# Aplicar formatos sobre las clases definidas
+with_vai = with_vai.set_table_styles(styles).set_td_classes(cell_fiscal_cost).set_td_classes(cell_border)
+
+# Integrar el CSS con Markdown para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
+st.markdown(hide_table_row_index, unsafe_allow_html=True)
+
+# Mostrar información financiera
+st.subheader(f'''
+            Flujos de Efectivo Con Valuación de Activos Intangibles
+            ''')
+
+# Integrar el DataFrame a la aplicación Web
+st.markdown(with_vai.to_html(), unsafe_allow_html=True)
 
 # Insertar una nota al pie de la tabla
 st.caption(f'Resultados en millones de pesos, estimados con base en información financiera de la actividad económica.')
