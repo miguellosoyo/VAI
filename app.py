@@ -240,7 +240,7 @@ st.subheader(f'''
             ''')
 
 # Integrar el DataFrame a la aplicación Web
-st.table(out_vai)
+st.write(out_vai)
 
 # Insertar una nota al pie de la tabla
 st.caption(f'Resultados estimados con base en información financiera de la actividad económica.')
