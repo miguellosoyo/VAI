@@ -323,7 +323,6 @@ options = {
   },
   'legend': {
     'top': '5%',
-    #'left': 'center'
     'orient': 'vertical',
     'right': 'right'
   },
@@ -349,7 +348,8 @@ options = {
 # Integrar gráfica de pastel
 st_echarts(options=options, height='400px')
 
-
+# Insertar una nota al pie de la gráfica
+st.caption(f'Proporciones porcentuales, estimadas con base en información financiera de la actividad económica.')
 
 # Calcular las tablas de flujos de efectivo con VAI
 with_vai = pd.DataFrame({'Utilidad antes de Impuestos':[raw_data['EBT'][0]*((1+inf_rate)**i) for i in range(0,7)], 
