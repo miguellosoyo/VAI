@@ -128,7 +128,7 @@ with st.sidebar:
   rfc = st.text_input('Ingrese el RFC de la Empresa')
   business_name = st.text_input('Ingrese la Razón Social de la Empresa')
   activity = st.selectbox('Elija la Actividad Económica que Realiza su Empresa', options=df_prop['Actividad'].unique())
-  income = st.number_input('Ingrese el Ingreso Anual más Reciente', step=1000)
+  income = st.number_input('Ingrese el Ingreso Anual más Reciente', value=1e7, step=1000)
   
   # Importar lista de actividades, margen neto y proporción de activos intangibles sobre ventas
   df_eco = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/VAI/main/data/Informacio%CC%81n%20Econo%CC%81mica%20por%20Actividad.csv')
@@ -145,11 +145,6 @@ with st.sidebar:
                                           value=(df_eco[df_eco['Actividad']==activity]['Intangibles'][0])*100, step=1.)/100
 
 # Definir la información base
-# income = 1e6 
-# net_margin = 31.18 
-# tax_rate = 0.3
-# inf_rate = 0.1
-# int_rate = 64.23
 raw_data = {'RFC':[rfc],
             'RAZÓN SOCIAL':[business_name],
             'ACTIVIDAD':[activity],
@@ -172,7 +167,7 @@ out_vai = pd.DataFrame({'Utilidad antes de Impuestos':[raw_data['EBT'][0]*((1+in
 out_vai.loc['ISR',:] = out_vai.loc['Utilidad antes de Impuestos', :].multiply(tax_rate)
 out_vai.loc['Utilidad Neta',:] = out_vai.loc['Utilidad antes de Impuestos', :].sub(out_vai.loc['ISR', :])
 out_vai.loc['Costo Fiscal', 'A0'] = out_vai.loc['ISR',:].sum()
-out_vai = out_vai.round(1).reset_index() # Redondear a una cifra decimal y reiniciar índice
+out_vai = out_vai.round(2).reset_index() # Redondear a una cifra decimal y reiniciar índice
 out_vai.rename(columns={'index':'Costo fiscal Sin VAI'}, inplace=True) # Renombrar primera columna
 
 # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
