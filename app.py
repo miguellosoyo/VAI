@@ -329,9 +329,9 @@ options = {
     {
       'name': 'Activos Intangibles',
       'type': 'pie',
-      'radius': ['40%', '70%'],
+      'radius': ['35%', '70%'],
       'data': [
-               { 'value': f'{round(x[-1]*100,2)}%', 'name': x[0] } for _, x in vai_df.data.iterrows() if not 'Valor Total' in x[0]],
+               { 'value': round(x[-1]*100,2), 'name': x[0] } for _, x in vai_df.data.iterrows() if not 'Valor Total' in x[0]],
       'emphasis': {
         'itemStyle': {
           'shadowBlur': 10,
