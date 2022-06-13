@@ -206,24 +206,17 @@ styles = [
           {'selector':'.w', 'props':[('background-color','white'), ('color','black')]},
           ]
 
-
-# Aplicar formatos
-out_vai.set_table_styles(styles)
-
 # Integrar líneas si el índice corresponde a una posición de la tabla
 cell_border = pd.DataFrame([['line']*len(x) if i==1 or i==2 else ['']*len(x) for i, x in out_vai.data.iterrows()], columns=out_vai.data.columns)
 cell_fiscal_cost = pd.DataFrame([x.notnull().astype(str).replace('True', 'w').tolist() if i==0 else (x.notnull().astype(str).replace('True', 'Cost').tolist() if i==3 
                                                                                                      else ['False']*len(x)) for i, x in out_vai.data.iterrows()], columns=out_vai.data.columns)
-
-# Aplicar sobre las clases definidas
-out_vai.set_td_classes(cell_fiscal_cost)
-out_vai.set_td_classes(cell_border)
+# Aplicar formatos sobre las clases definidas
+out_vai.set_table_styles(styles).set_td_classes(cell_fiscal_cost).set_td_classes(cell_border)
     
 # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
 hide_table_row_index = """
                         <style>
                         tbody th {display:none;}
-                        .blank {display:none;}
                         </style>
                       """
 
