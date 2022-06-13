@@ -128,7 +128,7 @@ with st.sidebar:
   rfc = st.text_input('Ingrese el RFC de la Empresa')
   business_name = st.text_input('Ingrese la Razón Social de la Empresa')
   activity = st.selectbox('Elija la Actividad Económica que Realiza su Empresa', options=df_prop['Actividad'].unique())
-  income = st.number_input('Ingrese el Ingreso Anual más Reciente', value=1e7, step=1e3)
+  income = st.number_input('Ingrese el Ingreso Anual más Reciente', value=int(1e7), step=int(1e3))
   
   # Importar lista de actividades, margen neto y proporción de activos intangibles sobre ventas
   df_eco = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/VAI/main/data/Informacio%CC%81n%20Econo%CC%81mica%20por%20Actividad.csv')
