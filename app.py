@@ -136,7 +136,8 @@ with st.sidebar:
 
   # Integrar un subtitulo para la sección
   st.subheader('Sección de Datos Económicos')
-  
+  st.write(df_eco[df_eco['Actividad']==activity])
+
   # Integrar campos de texto para capturar/modificar los niveles de margen neto, inflación e ISR
   net_margin_val = ((df_eco.loc[df_eco['Actividad']==activity, 'Margen Neto'])*100).iloc[0]
   net_margin = st.number_input('Margen Neto de la Actividad Económica', min_value=0., max_value=100., 
@@ -174,7 +175,8 @@ out_vai = out_vai.round(2).reset_index() # Redondear a una cifra decimal y reini
 out_vai.rename(columns={'index':'Costo fiscal Sin VAI'}, inplace=True) # Renombrar primera columna
 
 # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
-out_vai = out_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+# out_vai = out_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+out_vai = out_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'})
 
 # Definir las propiedades de estilo para los encabezados
 th_props = [
@@ -247,6 +249,68 @@ int_val = round(income*int_rate,2)
 vai_df = df_prop.loc[df_prop['Actividad']==activity, ['Intangibles', 'Proporciones']].copy()
 vai_df['Valor Intangibles'] = vai_df['Proporciones'].multiply(int_val).astype(int)
 vai_df = vai_df[['Intangibles', 'Valor Intangibles', 'Proporciones']] # Reordenar columnas
+vai_df.columns = ['Activos Intangibles<br>Identificados', 'Valor $', 'Valor %'] # Cambiar nombre de los encabezados
+
+# Integrar un total para el valor y proporción de los activos intangibles
+vai_df = vai_df.append(pd.DataFrame([['Valor Total de activos<br>intangibles', vai_df['Valor $'].sum(), vai_df['Valor %'].sum()]], columns=vai_df.columns)).reset_index(drop=True)
+
+# Asignar formatos a la tabla de activos intangibles identificados
+percent_format = lambda x: f"{x*100:.2f}%"
+thousands_format = lambda x: f"{x/1e6:,.2f}"
+vai_df = vai_df.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format({'Valor $':thousands_format,
+                                                                                                                                                             'Valor %': percent_format})
+
+# Definir las propiedades de estilo para los encabezados
+th_props = [
+            ('font-size', '12pt'),
+            ('text-align', 'center'),
+            ('font-weight', 'bold'),
+            ('color', '#ffff99'),
+            ('background-color', '#000086'),
+            ('width', '70%'),
+            ]
+
+# Definir las propiedades de estilo para la información de la tabla
+td_props = [
+            ('font-size', '8pt'),
+            ('width', '110%'),
+            ('text-align', 'center'),
+            ]
+
+# Integrar los estilos en una variable de estilos
+styles = [
+          dict(selector='th', props=th_props),
+          dict(selector='td', props=td_props),
+          {'selector':'.line', 'props':'border-bottom: 0.5px solid #000066'},
+          {'selector':'.False', 'props':'color: white'},
+          {'selector':'.Cost', 'props':[('font-weight', 'bold'), ('color', 'black')]},
+          {'selector':'.w', 'props':[('background-color','white'), ('color','black')]},
+          {'selector':'.T', 'props':[('color', '#000086'), ('border-bottom', '0.5px solid #000066')]},
+          {'selector':'.F', 'props':[('color', 'black'), ('border-bottom', '0.5px solid #000066')]},
+          ]
+
+# Integrar líneas si el índice corresponde a una posición de la tabla
+cell_border = pd.DataFrame([['line']*len(x) if i==1 or i==2 or i==3 or i==4 else ['']*len(x) for i, x in vai_df.data.iterrows()], columns=vai_df.data.columns)
+cell_fiscal_cost = pd.DataFrame([x.notnull().astype(str).replace('True', 'w').tolist() if i==0 else (x.notnull().astype(str).replace('True', 'Cost').tolist() if i==5 
+                                                                                                     else ['False']*len(x)) for i, x in vai_df.data.iterrows()], columns=vai_df.data.columns)
+cell_ind_per = pd.DataFrame([['F', 'F', 'T'] if i in range(5) else ['', '', ''] for i, x in vai_df.data.iterrows()], columns=vai_df.data.columns)
+
+# Aplicar formatos sobre las clases definidas
+vai_df = vai_df.set_table_styles(styles).set_td_classes(cell_fiscal_cost).set_td_classes(cell_border).set_td_classes(cell_ind_per)
+
+# Integrar el CSS con Markdown para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
+st.markdown(hide_table_row_index, unsafe_allow_html=True)
+
+# Mostrar información financiera
+st.subheader(f'''
+            Flujos de Efectivo Con Valuación de Activos Intangibles
+            ''')
+
+# Integrar el DataFrame a la aplicación Web
+st.markdown(vai_df.to_html(), unsafe_allow_html=True)
+
+# Insertar una nota al pie de la tabla
+st.caption(f'Resultados en millones de pesos, estimados con base en información financiera de la actividad económica.')
 
 # Calcular las tablas de flujos de efectivo con VAI
 with_vai = pd.DataFrame({'Utilidad antes de Impuestos':[raw_data['EBT'][0]*((1+inf_rate)**i) for i in range(0,7)], 
@@ -265,7 +329,8 @@ with_vai = with_vai.round(2).reset_index() # Redondear a una cifra decimal y rei
 with_vai.rename(columns={'index':'Costo fiscal Con VAI'}, inplace=True) # Renombrar primera columna
 
 # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
-with_vai = with_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+# with_vai = with_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+with_vai = with_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'})
 
 # Definir las propiedades de estilo para los encabezados
 th_props = [
