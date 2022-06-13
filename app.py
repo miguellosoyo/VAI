@@ -322,8 +322,10 @@ options = {
     'trigger': 'item'
   },
   'legend': {
-    'top': '5%',
-    'left': 'center'
+    # 'top': '5%',
+    #'left': 'center'
+    'orient': 'vertical',
+    'right': 'right'
   },
   'series': [
     {
