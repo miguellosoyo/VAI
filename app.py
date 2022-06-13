@@ -127,7 +127,8 @@ with st.sidebar:
   # Integrar campos de texto para capturar el RFC, Razón Social, Actividad Económica, Ingresos Anuales
   rfc = st.text_input('Ingrese el RFC de la Empresa')
   business_name = st.text_input('Ingrese la Razón Social de la Empresa')
-  activity = st.selectbox('Elija la Actividad Económica que Realiza su Empresa', options=df_prop['Actividad'].unique())
+  activities = df_prop['Actividad'].unique()
+  activity = st.selectbox('Elija la Actividad Económica que Realiza su Empresa', options=activities)
   income = st.number_input('Ingrese el Ingreso Anual más Reciente', value=int(1e7), step=int(1e3))
   
   # Importar lista de actividades, margen neto y proporción de activos intangibles sobre ventas
@@ -139,11 +140,11 @@ with st.sidebar:
 
   # Integrar campos de texto para capturar/modificar los niveles de margen neto, inflación e ISR
   net_margin = st.number_input('Margen Neto de la Actividad Económica', min_value=0., max_value=100., 
-                               value=(df_eco[df_eco['Actividad']==activity]['Margen Neto'].copy()[0])*100, step=1.)/100
+                               value=(df_eco.loc[df_eco['Actividad']==activity, 'Margen Neto'][0])*100, step=1.)/100
   inf_rate = st.number_input('Inflación Anual', min_value=0, max_value=100, value=10, step=1)/100
   tax_rate = st.number_input('Tasa de ISR', min_value=0, max_value=50, value=30, step=1)/100
   int_rate = st.number_input('Participación de Intangibles sobre Ventas', min_value=0., max_value=100., 
-                                          value=(df_eco[df_eco['Actividad']==activity]['Intangibles'].copy()[0])*100, step=1.)/100
+                                          value=(df_eco.loc[df_eco['Actividad']==activity, 'Intangibles'][0])*100, step=1.)/100
 
 # Definir la información base
 raw_data = {'RFC':[rfc],
