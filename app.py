@@ -139,11 +139,11 @@ with st.sidebar:
 
   # Integrar campos de texto para capturar/modificar los niveles de margen neto, inflación e ISR
   net_margin = st.number_input('Margen Neto de la Actividad Económica', min_value=0., max_value=100., 
-                               value=(df_eco[df_eco['Actividad']==activity]['Margen Neto'][0])*100, step=1.)/100
+                               value=(df_eco[df_eco['Actividad']==activity]['Margen Neto'].copy()[0])*100, step=1.)/100
   inf_rate = st.number_input('Inflación Anual', min_value=0, max_value=100, value=10, step=1)/100
   tax_rate = st.number_input('Tasa de ISR', min_value=0, max_value=50, value=30, step=1)/100
   int_rate = st.number_input('Participación de Intangibles sobre Ventas', min_value=0., max_value=100., 
-                                          value=(df_eco[df_eco['Actividad']==activity]['Intangibles'][0])*100, step=1.)/100
+                                          value=(df_eco[df_eco['Actividad']==activity]['Intangibles'].copy()[0])*100, step=1.)/100
 
 # Definir la información base
 raw_data = {'RFC':[rfc],
