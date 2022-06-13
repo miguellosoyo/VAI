@@ -322,7 +322,7 @@ options = {
     'trigger': 'item'
   },
   'legend': {
-    # 'top': '5%',
+    'top': '5%',
     #'left': 'center'
     'orient': 'vertical',
     'right': 'right'
@@ -332,13 +332,14 @@ options = {
       'name': 'Activos Intangibles',
       'type': 'pie',
       'radius': ['35%', '70%'],
+      'color': ['#bca04d', '#dabb5b', '#f3d067', '#ffdf85', '#ffe7ab',],
       'data': [
                { 'value': round(x[-1]*100,2), 'name': x[0] } for _, x in vai_df.data.iterrows() if not 'Valor Total' in x[0]],
       'emphasis': {
         'itemStyle': {
           'shadowBlur': 10,
           'shadowOffsetX': 0,
-          'shadowColor': 'rgba(0, 0, 0, 0.5)'
+          'shadowColor': 'rgba(0, 0, 0, 0.75)'
         }
       }
     }
