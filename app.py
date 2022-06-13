@@ -224,7 +224,6 @@ hide_table_row_index = """
                         <style>
                         tbody th {display:none;}
                         .blank {display:none;}
-                        .col_heading {font-family: monospace; border: 3px solid white; text-align: center !important;}
                         </style>
                       """
 
