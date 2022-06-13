@@ -312,6 +312,42 @@ st.markdown(vai_df.to_html(), unsafe_allow_html=True)
 # Insertar una nota al pie de la tabla
 st.caption(f'Resultados en millones de pesos, estimados con base en información financiera de la actividad económica.')
 
+# Crear el gráfico de pastel
+options = {
+  'title': {  
+    'text': 'Desglose de la proporción de Activos Intangibles', 
+    'left': 'center'
+  },
+  'tooltip': {
+    'trigger': 'item'
+  },
+  'legend': {
+    'orient': 'vertical',
+    'left': 'left'
+  },
+  'series': [
+    {
+      'name': 'Activos Intangibles',
+      'type': 'pie',
+      'radius': '50%',
+      'data': [
+               { 'value': x[-1]*100, 'name': x[0] } for _, x in vai_df.data.iterrows() if not 'Valor Total' in x[0]],
+      'emphasis': {
+        'itemStyle': {
+          'shadowBlur': 10,
+          'shadowOffsetX': 0,
+          'shadowColor': 'rgba(0, 0, 0, 0.5)'
+        }
+      }
+    }
+  ]
+}
+
+# Integrar gráfica de pastel
+st_echarts(options=options, height='400px')
+
+
+
 # Calcular las tablas de flujos de efectivo con VAI
 with_vai = pd.DataFrame({'Utilidad antes de Impuestos':[raw_data['EBT'][0]*((1+inf_rate)**i) for i in range(0,7)], 
                          'Amortización del Activo Intangible':[(int_val*0.15)/1e6 
