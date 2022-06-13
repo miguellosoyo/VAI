@@ -164,10 +164,11 @@ out_vai = pd.DataFrame({'Utilidad antes de Impuestos':[raw_data['EBT'][0]*((1+in
                         'ISR':[i for i in range(0,7)], 'Utilidad Neta':[i for i in range(0,7)]}, index=[f'A{i}' for i in range(0,7)]).T
 out_vai.loc['ISR',:] = out_vai.loc['Utilidad antes de Impuestos', :].multiply(tax_rate)
 out_vai.loc['Utilidad Neta',:] = out_vai.loc['Utilidad antes de Impuestos', :].sub(out_vai.loc['ISR', :])
-out_vai = out_vai.round(1) # Redondear a una cifra
+out_vai = out_vai.round(1).reset_index() # Redondear a una cifra decimal y reiniciar índice
+out_vai.rename(columns={'index':'Costo fiscal Sin VAI'}, inplace=True) # Renombrar primera columna
 
 # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
-# out_vai = df.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+out_vai = out_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
 
 # Definir las propiedades de estilo para los encabezados
 th_props = [
@@ -175,7 +176,7 @@ th_props = [
             ('text-align', 'center'),
             ('font-weight', 'bold'),
             ('color', 'white'),
-            ('background-color', '#328f1d')
+            ('background-color', '#404040')
             ]
 
 # Definir las propiedades de estilo para la información de la tabla
@@ -191,7 +192,7 @@ styles = [
           ]
 
 # Aplicar formatos
-# out_vai.set_table_styles(styles)
+out_vai.set_table_styles(styles)
 
 # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
 hide_table_row_index = """
