@@ -331,7 +331,7 @@ options = {
       'type': 'pie',
       'radius': ['40%', '70%'],
       'data': [
-               { 'value': f'{(x[-1]*100).round(2)}%', 'name': x[0] } for _, x in vai_df.data.iterrows() if not 'Valor Total' in x[0]],
+               { 'value': f'{round(x[-1]*100,2)}%', 'name': x[0] } for _, x in vai_df.data.iterrows() if not 'Valor Total' in x[0]],
       'emphasis': {
         'itemStyle': {
           'shadowBlur': 10,
