@@ -194,7 +194,7 @@ td_props = [
             ('font-size', '8pt'),
             ('width', '110%'),
             ('text-align', 'center'),
-            ('border', '0.5 solid white'),
+            ('border', '0.5px solid white'),
             ]
 
 # Integrar los estilos en una variable de estilos
