@@ -194,6 +194,7 @@ td_props = [
             ('font-size', '8pt'),
             ('width', '110%'),
             ('text-align', 'center'),
+            ('border', '0.5 solid white'),
             ]
 
 # Integrar los estilos en una variable de estilos
@@ -212,8 +213,7 @@ cell_fiscal_cost = pd.DataFrame([x.notnull().astype(str).replace('True', 'w').to
                                                                                                      else ['False']*len(x)) for i, x in out_vai.data.iterrows()], columns=out_vai.data.columns)
 
 # Aplicar formatos sobre las clases definidas
-out_vai = out_vai.set_td_classes(cell_fiscal_cost).set_td_classes(cell_border)
-out_vai = out_vai.set_table_styles(styles)
+out_vai = out_vai.set_table_styles(styles).set_td_classes(cell_fiscal_cost).set_td_classes(cell_border)
 
 # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
 hide_table_row_index = """
