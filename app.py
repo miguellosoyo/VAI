@@ -210,6 +210,7 @@ styles = [
 cell_border = pd.DataFrame([['line']*len(x) if i==1 or i==2 else ['']*len(x) for i, x in out_vai.data.iterrows()], columns=out_vai.data.columns)
 cell_fiscal_cost = pd.DataFrame([x.notnull().astype(str).replace('True', 'w').tolist() if i==0 else (x.notnull().astype(str).replace('True', 'Cost').tolist() if i==3 
                                                                                                      else ['False']*len(x)) for i, x in out_vai.data.iterrows()], columns=out_vai.data.columns)
+
 # Aplicar formatos sobre las clases definidas
 out_vai.set_table_styles(styles).set_td_classes(cell_fiscal_cost).set_td_classes(cell_border)
     
@@ -217,6 +218,15 @@ out_vai.set_table_styles(styles).set_td_classes(cell_fiscal_cost).set_td_classes
 hide_table_row_index = """
                         <style>
                         tbody th {display:none;}
+                        .blank {display:none;}
+                        .col_heading {font-family: monospace; border: 3px solid white; text-align: center !important;}
+                        </style>
+                      """
+hide_table_row_index = """
+                        <style>
+                        tbody th {display:none;}
+                        .blank {display:none;}
+                        .col_heading {font-family: monospace; text-align: center !important;}
                         </style>
                       """
 
