@@ -140,10 +140,15 @@ with st.sidebar:
                                value=(df_eco[df_eco['Actividad']==activity]['Margen Neto'][0])*100, step=1.)/100
   inf_rate = st.number_input('Inflación Anual', min_value=0, max_value=100, value=10, step=1)/100
   tax_rate = st.number_input('Tasa de ISR', min_value=0, max_value=50, value=30, step=1)/100
-  int_rate = st.number_input('Margen Neto de la Actividad Económica', min_value=0., max_value=100., 
+  int_rate = st.number_input('Participación de Intangibles sobre Ventas', min_value=0., max_value=100., 
                                           value=(df_eco[df_eco['Actividad']==activity]['Intangibles'][0])*100, step=1.)/100
 
 # Definir la información base
+income = 1e6 
+net_margin = 31.18 
+tax_rate = 0.3
+inf_rate = 0.1
+int_rate = 64.23
 raw_data = {'RFC':[rfc],
             'RAZÓN SOCIAL':[business_name],
             'ACTIVIDAD':[activity],
