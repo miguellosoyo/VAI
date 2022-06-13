@@ -1,4 +1,3 @@
-
 # Importar librerías de trabajo
 import os
 import random
@@ -6,9 +5,8 @@ import numpy as np
 import pandas as pd
 import altair as alt
 import streamlit as st
-# import pyecharts.options as opts
-# from pyecharts.charts import Bar, Pie
-# from streamlit_echarts import st_pyecharts
+from streamlit_echarts import JsCode
+from streamlit_echarts import st_echarts
 
 # Definir una función para obtener la distribución de pesos para una lista de variables
 def weighted(elements:list, step:float=10, start:int=7, end:int=11, threshold:float=0.32, seed:bool=True):
@@ -130,7 +128,7 @@ with st.sidebar:
   business_name = st.text_input('Ingrese la Razón Social de la Empresa')
   activity = st.selectbox('Elija la Actividad Económica que Realiza su Empresa', options=df_prop['Actividad'].unique())
   income = st.number_input('Ingrese el Ingreso Anual más Reciente', step=1000)
-
+  
   # Importar lista de actividades, margen neto y proporción de activos intangibles sobre ventas
   df_eco = pd.read_csv('https://raw.githubusercontent.com/miguellosoyo/VAI/main/data/Informacio%CC%81n%20Econo%CC%81mica%20por%20Actividad.csv')
 
@@ -169,7 +167,7 @@ out_vai.loc['Utilidad Neta',:] = out_vai.loc['Utilidad antes de Impuestos', :].s
 out_vai = out_vai.round(1) # Redondear a una cifra
 
 # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
-out_vai = df.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+# out_vai = df.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
 
 # Definir las propiedades de estilo para los encabezados
 th_props = [
@@ -193,7 +191,7 @@ styles = [
           ]
 
 # Aplicar formatos
-out_vai.set_table_styles(styles)
+# out_vai.set_table_styles(styles)
 
 # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
 hide_table_row_index = """
@@ -217,25 +215,3 @@ st.table(out_vai)
 
 # Insertar una nota al pie de la tabla
 st.caption(f'Resultados estimados con base en información financiera de la actividad económica.')
-
-# # Estimar el valor de 6 activos intangibles
-# vai_df = intangible_assets_df(income)
-
-# # Calcular las tablas de flujos de efectivo con VAI
-# with_vai = pd.DataFrame({'Utilidad antes de Impuestos':[margin_0*((1+inf_rate)**i) for i in range(0,7)], 
-#                          'Amortización del Activo Intangible':[((intangible_proportion*income)*(0.15))/1e6 
-#                                                                if i!=6 else ((intangible_proportion*income)*(0.1))/1e6 for i in range(0,7)], 
-#                          'Utilidad antes de Impuestos Ajustada':[margin_0*((1+inf_rate)**i) for i in range(0,7)],
-#                          'ISR':[i for i in range(0,7)],
-#                          'Utilidad Neta':[i for i in range(0,7)]}, index=[f'A{i}' for i in range(0,7)]).T
-# with_vai.loc['Utilidad antes de Impuestos Ajustada',:] = with_vai.loc['Utilidad antes de Impuestos', :].sub(with_vai.loc['Amortización del Activo Intangible',:])
-# with_vai.loc['ISR',:] = with_vai.loc['Utilidad antes de Impuestos Ajustada', :].multiply(tax_rate)
-# with_vai.loc['Utilidad Neta',:] = with_vai.loc['Utilidad antes de Impuestos Ajustada', :].sub(with_vai.loc['ISR', :])
-# with_vai = with_vai.round(1)
-
-
-
-
-
-# display(out_vai)
-# display(with_vai)
