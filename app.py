@@ -212,8 +212,8 @@ cell_fiscal_cost = pd.DataFrame([x.notnull().astype(str).replace('True', 'w').to
                                                                                                      else ['False']*len(x)) for i, x in out_vai.data.iterrows()], columns=out_vai.data.columns)
 
 # Aplicar formatos sobre las clases definidas
-out_vai = out_vai.set_table_styles(styles).set_td_classes(cell_fiscal_cost).set_td_classes(cell_border)
-    
+out_vai = out_vai.set_td_classes(cell_fiscal_cost).set_td_classes(cell_border).set_table_styles(styles)
+
 # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
 hide_table_row_index = """
                         <style>
@@ -239,7 +239,7 @@ st.subheader(f'''
             ''')
 
 # Integrar el DataFrame a la aplicación Web
-st.table(out_vai)
+st.dataframe(out_vai)
 
 # Insertar una nota al pie de la tabla
 st.caption(f'Resultados estimados con base en información financiera de la actividad económica.')
