@@ -78,8 +78,9 @@ def highlight(x):
 
   # Definir un DataFrame con el mapeo de los colores
   df1 = pd.DataFrame('', index=x.index, columns=x.columns)
-  df1.loc[df1.index%2!=0, :] = c1
+  df1.loc[df1.index%2!=0, :] = c2
   df1.loc[df1.index%2==0, :] = c2
+
   return df1  
 
 # Crear una función para calcular la TIR
@@ -166,14 +167,17 @@ df = pd.DataFrame(raw_data)
 
 # Calcular las tablas de flujos de efectivo sin VAI
 out_vai = pd.DataFrame({'Utilidad antes de Impuestos':[raw_data['EBT'][0]*((1+inf_rate)**i) for i in range(0,7)], 
-                        'ISR':[i for i in range(0,7)], 'Utilidad Neta':[i for i in range(0,7)]}, index=[f'A{i}' for i in range(0,7)]).T
+                        'ISR':[i for i in range(0,7)], 'Utilidad Neta':[i for i in range(0,7)], 'Costo Fiscal':[0 if i==0 else np.nan for i in range(0,7)]}, 
+                       index=[f'A{i}' for i in range(0,7)]).T
 out_vai.loc['ISR',:] = out_vai.loc['Utilidad antes de Impuestos', :].multiply(tax_rate)
 out_vai.loc['Utilidad Neta',:] = out_vai.loc['Utilidad antes de Impuestos', :].sub(out_vai.loc['ISR', :])
+out_vai.loc['Costo Fiscal', 'A0'] = out_vai.loc['ISR',:].sum()
 out_vai = out_vai.round(1).reset_index() # Redondear a una cifra decimal y reiniciar índice
 out_vai.rename(columns={'index':'Costo fiscal Sin VAI'}, inplace=True) # Renombrar primera columna
 
 # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
 out_vai = out_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
+# out_vai = out_vai.style.set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
 
 # Definir las propiedades de estilo para los encabezados
 th_props = [
@@ -181,24 +185,40 @@ th_props = [
             ('text-align', 'center'),
             ('font-weight', 'bold'),
             ('color', 'white'),
-            ('background-color', '#404040')
+            ('background-color', '#404040'),
+            ('width', '70%'),
             ]
 
 # Definir las propiedades de estilo para la información de la tabla
 td_props = [
             ('font-size', '8pt'),
             ('width', '110%'),
+            ('text-align', 'center'),
             ]
 
 # Integrar los estilos en una variable de estilos
 styles = [
           dict(selector='th', props=th_props),
-          dict(selector='td', props=td_props)
+          dict(selector='td', props=td_props),
+          {'selector':'.line', 'props':'border-bottom: 0.5px solid #000066'},
+          {'selector':'.False', 'props':'color: white'},
+          {'selector':'.Cost', 'props':[('font-weight', 'bold'), ('background-color', '#f2f2f2')]},
+          {'selector':'.w', 'props':[('background-color','white'), ('color','black')]},
           ]
+
 
 # Aplicar formatos
 out_vai.set_table_styles(styles)
 
+# Integrar líneas si el índice corresponde a una posición de la tabla
+cell_border = pd.DataFrame([['line']*len(x) if i==1 or i==2 else ['']*len(x) for i, x in out_vai.data.iterrows()], columns=out_vai.data.columns)
+cell_fiscal_cost = pd.DataFrame([x.notnull().astype(str).replace('True', 'w').tolist() if i==0 else (x.notnull().astype(str).replace('True', 'Cost').tolist() if i==3 
+                                                                                                     else ['False']*len(x)) for i, x in out_vai.data.iterrows()], columns=out_vai.data.columns)
+
+# Aplicar sobre las clases definidas
+out_vai.set_td_classes(cell_fiscal_cost)
+out_vai.set_td_classes(cell_border)
+    
 # Definir formato CSS para eliminar los índices de la tabla, centrar encabezados, aplicar líneas de separación y cambiar tipografía
 hide_table_row_index = """
                         <style>
