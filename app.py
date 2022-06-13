@@ -136,7 +136,7 @@ with st.sidebar:
 
   # Integrar un subtitulo para la sección
   st.subheader('Sección de Datos Económicos')
-  st.write(df_eco)
+  st.write(df_eco[df_eco['Actividad']==activity])
 
   # Integrar campos de texto para capturar/modificar los niveles de margen neto, inflación e ISR
   net_margin_val = ((df_eco.loc[df_eco['Actividad']==activity, 'Margen Neto'])*100)[0]
