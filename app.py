@@ -175,8 +175,7 @@ out_vai = out_vai.round(2).reset_index() # Redondear a una cifra decimal y reini
 out_vai.rename(columns={'index':'Costo fiscal Sin VAI'}, inplace=True) # Renombrar primera columna
 
 # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
-# out_vai = out_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
-out_vai = out_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'})
+out_vai = out_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
 
 # Definir las propiedades de estilo para los encabezados
 th_props = [
@@ -368,8 +367,7 @@ with_vai = with_vai.round(2).reset_index() # Redondear a una cifra decimal y rei
 with_vai.rename(columns={'index':'Costo fiscal Con VAI'}, inplace=True) # Renombrar primera columna
 
 # Aplicar el formato definido en el caso respectivo, y esconder el índice de números consecutivos
-# with_vai = with_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
-with_vai = with_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'})
+with_vai = with_vai.style.apply(highlight, axis=None).set_properties(**{'font-size': '10pt', 'font-family': 'monospace', 'border': '', 'width': '110%'}).format(format)
 
 # Definir las propiedades de estilo para los encabezados
 th_props = [
