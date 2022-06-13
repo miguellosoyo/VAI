@@ -136,8 +136,7 @@ with st.sidebar:
 
   # Integrar un subtitulo para la sección
   st.subheader('Sección de Datos Económicos')
-  st.write(df_eco[df_eco['Actividad']==activity])
-
+  
   # Integrar campos de texto para capturar/modificar los niveles de margen neto, inflación e ISR
   net_margin_val = ((df_eco.loc[df_eco['Actividad']==activity, 'Margen Neto'])*100).iloc[0]
   net_margin = st.number_input('Margen Neto de la Actividad Económica', min_value=0., max_value=100., 
@@ -239,7 +238,6 @@ st.subheader(f'''
 
 # Integrar el DataFrame a la aplicación Web
 st.markdown(out_vai.to_html(), unsafe_allow_html=True)
-# st.write(out_vai)
 
 # Insertar una nota al pie de la tabla
 st.caption(f'Resultados en millones de pesos, estimados con base en información financiera de la actividad económica.')
